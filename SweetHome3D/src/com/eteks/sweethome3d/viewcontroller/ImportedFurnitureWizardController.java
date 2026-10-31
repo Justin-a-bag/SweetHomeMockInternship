@@ -79,6 +79,7 @@ public class ImportedFurnitureWizardController extends WizardController
   private float                            proportionalDepth;
   private float                            height;
   private float                            proportionalHeight;
+  private float                            volume;
   private float                            elevation;
   private boolean                          movable;
   private boolean                          doorOrWindow;
@@ -188,13 +189,13 @@ public class ImportedFurnitureWizardController extends WizardController
     CatalogPieceOfFurniture newPiece;
     if (isDoorOrWindow()) {
       newPiece = new CatalogDoorOrWindow(getName(), getIcon(), getModel(), 
-          getWidth(), getDepth(), getHeight(), getElevation(), 
+          getWidth(), getDepth(), getHeight(), getElevation(),
           isMovable(), 1, 0, new Sash [0], getColor(), 
           getModelRotation(), isBackFaceShown(), 
           getIconYaw(), isProportional());
     } else {
       newPiece = new CatalogPieceOfFurniture(getName(), getIcon(), getModel(), 
-          getWidth(), getDepth(), getHeight(), getElevation(), 
+          getWidth(), getDepth(), getHeight(), getElevation(),
           isMovable(), getStaircaseCutOutShape(), 
           getColor(), getModelRotation(), isBackFaceShown(), 
           getIconYaw(), isProportional());
@@ -543,6 +544,25 @@ public class ImportedFurnitureWizardController extends WizardController
       this.height = adjustedHeight;
       this.propertyChangeSupport.firePropertyChange(Property.HEIGHT.name(), oldHeight, adjustedHeight);
     }
+  }
+
+  /**
+   * Returns the volume.
+   */
+  public float getVolume() {
+    return this.volume;
+  }
+  /**
+   * Sets the volume of the imported piece.
+   */
+  public void setVolume() {
+    this.volume = getDepth()*getWidth()*getHeight();
+  }
+  /**
+   * Sets the volume of the imported piece.
+   */
+  public void setVolume(float volume) {
+    this.volume = volume;
   }
 
   /**

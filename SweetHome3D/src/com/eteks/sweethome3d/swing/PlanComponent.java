@@ -2002,13 +2002,41 @@ public class PlanComponent extends JComponent implements PlanView, Scrollable, P
     }
     return strokeWidth;
   }
-  
+
+  /**
+   * Prints the pages per viewable level, in home level order.
+   */
+public int print(Graphics g, PageFormat pageFormat, int pageIndex){
+  List<Level> printedLevels = new ArrayList<Level>();
+  for (Level level : this.home.getLevels()){
+    if (level.isViewable()){
+      printedLevels.add(level);
+    }
+  }
+  if (printedLevels.isEmpty()){
+    return printSelectedLevel(g,pageFormat,pageIndex);
+  }
+  int pagesPerLevel = getPrintedPagesPerLevel(g,pageFormat);
+  if (pageIndex < 0 || pagesPerLevel == 0 || pageIndex >= pagesPerLevel*printedLevels.size()){
+    return NO_SUCH_PAGE;
+  }
+  Level selectedLevel = this.home.getSelectedLevel();
+  try{
+    this.home.setSelectedLevel(printedLevels.get(pageIndex/pagesPerLevel));
+    return printSelectedLevel(g,pageFormat,pageIndex%pagesPerLevel);
+  } catch (Exception e) {
+    //ignore the exception
+  }
+  this.home.setSelectedLevel((selectedLevel));
+  return NO_SUCH_PAGE;
+}
+
   /**
    * Prints this component plan at the scale given in the home print attributes or at a scale 
    * that makes it fill <code>pageFormat</code> imageable size if this attribute is <code>null</code>.
    */
-  public int print(Graphics g, PageFormat pageFormat, int pageIndex) {
-    List<Selectable> printedItems = getPaintedItems(); 
+  public int printSelectedLevel(Graphics g, PageFormat pageFormat, int pageIndex) {
+    List<Selectable> printedItems = getPaintedItems();
     Rectangle2D printedItemBounds = getItemsBounds(g, printedItems);
     if (printedItemBounds != null) {
       double imageableX = pageFormat.getImageableX();
@@ -2074,7 +2102,31 @@ public class PlanComponent extends JComponent implements PlanView, Scrollable, P
       return NO_SUCH_PAGE;
     }
   }
-  
+
+  /**
+   * returns the number of pages needed to print the plan of one level.
+   */
+  private int getPrintedPagesPerLevel(Graphics g, PageFormat pageFormat){
+    Rectangle2D printedItemBounds = getItemsBounds(g, getPaintedItems());
+    if (printedItemBounds == null) {
+      return 0;
+    }
+    if (this.home.getPrint() == null || this.home.getPrint().getPlanScale() == null) {
+      return 1;   // plan scaled to fill one page
+    }
+    float printScale = this.home.getPrint().getPlanScale().floatValue()
+            * LengthUnit.centimeterToInch(72);
+    int pagesPerRow = (int)(printedItemBounds.getWidth() * printScale / pageFormat.getImageableWidth());
+    if (printedItemBounds.getWidth() * printScale != pageFormat.getImageableWidth()) {
+      pagesPerRow++;
+    }
+    int pagesPerColumn = (int)(printedItemBounds.getHeight() * printScale / pageFormat.getImageableHeight());
+    if (printedItemBounds.getHeight() * printScale != pageFormat.getImageableHeight()) {
+      pagesPerColumn++;
+    }
+    return pagesPerRow * pagesPerColumn;
+  }
+
   /**
    * Returns an image of the selected items displayed by this component 
    * (camera excepted) with no outline at scale 1/1 (1 pixel = 1cm).

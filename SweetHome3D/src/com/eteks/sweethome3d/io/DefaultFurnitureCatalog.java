@@ -612,6 +612,7 @@ public class DefaultFurnitureCatalog extends FurnitureCatalog {
     float width = Float.parseFloat(resource.getString(PropertyKey.WIDTH.getKey(index)));
     float depth = Float.parseFloat(resource.getString(PropertyKey.DEPTH.getKey(index)));
     float height = Float.parseFloat(resource.getString(PropertyKey.HEIGHT.getKey(index)));
+    float volume = width*depth*height;
     float elevation = getOptionalFloat(resource, PropertyKey.ELEVATION.getKey(index), 0);
     float dropOnTopElevation = getOptionalFloat(resource, PropertyKey.DROP_ON_TOP_ELEVATION.getKey(index), height) / height;
     boolean movable = Boolean.parseBoolean(resource.getString(PropertyKey.MOVABLE.getKey(index)));
@@ -645,19 +646,19 @@ public class DefaultFurnitureCatalog extends FurnitureCatalog {
           resource, PropertyKey.DOOR_OR_WINDOW_WALL_DISTANCE.getKey(index), 0) / depth;
       Sash [] sashes = getDoorOrWindowSashes(resource, index, width, depth);
       return new CatalogDoorOrWindow(id, name, description, information, tags, creationDate, grade, 
-          icon, planIcon, model, width, depth, height, elevation, dropOnTopElevation, movable, 
+          icon, planIcon, model, width, depth, height, elevation, dropOnTopElevation, movable,
           doorOrWindowCutOutShape, wallThicknessPercentage, wallDistancePercentage, sashes,
           modelRotation, false, creator, resizable, deformable, texturable, price, valueAddedTaxPercentage, currency);
     } else {
       LightSource [] lightSources = getLightSources(resource, index, width, depth, height);
       if (lightSources != null) {
         return new CatalogLight(id, name, description, information, tags, creationDate, grade, 
-            icon, planIcon, model, width, depth, height, elevation, dropOnTopElevation, movable, 
+            icon, planIcon, model, width, depth, height, elevation, dropOnTopElevation, movable,
             lightSources, staircaseCutOutShape, modelRotation, false, creator, 
             resizable, deformable, texturable, price, valueAddedTaxPercentage, currency);
       } else {
         return new CatalogPieceOfFurniture(id, name, description, information, tags, creationDate, grade, 
-            icon, planIcon, model, width, depth, height, elevation, dropOnTopElevation, movable, 
+            icon, planIcon, model, width, depth, height, elevation, dropOnTopElevation, movable,
             staircaseCutOutShape, modelRotation, false, creator, 
             resizable, deformable, texturable, price, valueAddedTaxPercentage, currency);
       }

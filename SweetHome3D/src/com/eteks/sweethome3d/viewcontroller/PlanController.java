@@ -5469,6 +5469,7 @@ public class PlanController extends FurnitureController implements Controller {
     final float newWidth = piece.getWidth();
     final float newDepth = piece.getDepth();
     final float newHeight = piece.getHeight();
+    final float newVolume = piece.getVolume();
     final boolean doorOrWindowBoundToWall = piece instanceof HomeDoorOrWindow 
         && ((HomeDoorOrWindow)piece).isBoundToWall();
     UndoableEdit undoableEdit = new AbstractUndoableEdit() {      
@@ -5488,6 +5489,7 @@ public class PlanController extends FurnitureController implements Controller {
         piece.setWidth(newWidth);
         piece.setDepth(newDepth);
         piece.setHeight(newHeight);
+        piece.setVolume(newVolume);
         if (piece instanceof HomeDoorOrWindow) {
           ((HomeDoorOrWindow)piece).setBoundToWall(doorOrWindowBoundToWall);
         }
@@ -5964,12 +5966,14 @@ public class PlanController extends FurnitureController implements Controller {
     private final float                width;
     private final float                depth;
     private final float                height;
+    private final float                volume;
     private final boolean              doorOrWindowBoundToWall;
     private final float []             groupFurnitureX;
     private final float []             groupFurnitureY;
     private final float []             groupFurnitureWidth;
     private final float []             groupFurnitureDepth;
     private final float []             groupFurnitureHeight;
+    private final float []             groupFurnitureVolume;
 
     public ResizedPieceOfFurniture(HomePieceOfFurniture piece) {
       this.piece = piece;
@@ -5978,6 +5982,7 @@ public class PlanController extends FurnitureController implements Controller {
       this.width = piece.getWidth();
       this.depth = piece.getDepth();
       this.height = piece.getHeight();
+      this.volume = piece.getVolume();
       this.doorOrWindowBoundToWall = piece instanceof HomeDoorOrWindow 
           && ((HomeDoorOrWindow)piece).isBoundToWall();
       if (piece instanceof HomeFurnitureGroup) {
@@ -5987,6 +5992,7 @@ public class PlanController extends FurnitureController implements Controller {
         this.groupFurnitureWidth = new float [groupFurniture.size()];
         this.groupFurnitureDepth = new float [groupFurniture.size()];
         this.groupFurnitureHeight = new float [groupFurniture.size()];
+        this.groupFurnitureVolume = new float [groupFurniture.size()];
         for (int i = 0; i < groupFurniture.size(); i++) {
           HomePieceOfFurniture groupPiece = groupFurniture.get(i);
           this.groupFurnitureX [i] = groupPiece.getX();
@@ -5994,6 +6000,7 @@ public class PlanController extends FurnitureController implements Controller {
           this.groupFurnitureWidth [i] = groupPiece.getWidth();
           this.groupFurnitureDepth [i] = groupPiece.getDepth();
           this.groupFurnitureHeight [i] = groupPiece.getHeight();
+          this.groupFurnitureVolume [i] = groupPiece.getVolume();
         }
       } else {
         this.groupFurnitureX = null;
@@ -6001,6 +6008,7 @@ public class PlanController extends FurnitureController implements Controller {
         this.groupFurnitureWidth = null;
         this.groupFurnitureDepth = null;
         this.groupFurnitureHeight = null;
+        this.groupFurnitureVolume = null;
       }
     }
 
@@ -6019,6 +6027,8 @@ public class PlanController extends FurnitureController implements Controller {
     public float getHeight() {
       return this.height;
     }
+
+    public float getVolume() { return this.volume; }
     
     public boolean isDoorOrWindowBoundToWall() {
       return this.doorOrWindowBoundToWall;
@@ -6030,6 +6040,7 @@ public class PlanController extends FurnitureController implements Controller {
       this.piece.setWidth(this.width);
       this.piece.setDepth(this.depth);
       this.piece.setHeight(this.height);
+      this.piece.setVolume(this.volume);
       if (this.piece instanceof HomeDoorOrWindow) {
         ((HomeDoorOrWindow)this.piece).setBoundToWall(this.doorOrWindowBoundToWall);
       }
@@ -6044,6 +6055,7 @@ public class PlanController extends FurnitureController implements Controller {
             groupPiece.setWidth(this.groupFurnitureWidth [i]);
             groupPiece.setDepth(this.groupFurnitureDepth [i]);
             groupPiece.setHeight(this.groupFurnitureHeight [i]);
+            groupPiece.setVolume(this.groupFurnitureVolume [i]);
           }
         }
       }
@@ -8543,6 +8555,10 @@ public class PlanController extends FurnitureController implements Controller {
         selectedPiece.setY(newY);
         selectedPiece.setWidth(newWidth);
         selectedPiece.setDepth(newDepth);
+        selectedPiece.setVolume(newDepth*newWidth*newHeight);
+      }
+      else{
+        selectedPiece.setVolume(selectedPiece.getDepth()*selectedPiece.getWidth()*newHeight);
       }
       
       // Ensure point at (x,y) is visible
@@ -8680,6 +8696,7 @@ public class PlanController extends FurnitureController implements Controller {
         newDepth = depth * ratio;
         newHeight = this.resizedPiece.getHeight() * ratio;
       }
+      float newVolume = newDepth*newHeight*newWidth;
       
       // Update piece new location
       float newX = (float)(this.topLeftPoint [0] + (newWidth * cos - newDepth * sin) / 2f);
@@ -8690,6 +8707,7 @@ public class PlanController extends FurnitureController implements Controller {
       selectedPiece.setWidth(newWidth);
       selectedPiece.setDepth(newDepth);
       selectedPiece.setHeight(newHeight);
+      selectedPiece.setVolume(newVolume);
       if (this.resizedPiece.isDoorOrWindowBoundToWall()) {
         // Maintain boundToWall flag
         ((HomeDoorOrWindow)selectedPiece).setBoundToWall(this.magnetismEnabled && newDepth == depth);

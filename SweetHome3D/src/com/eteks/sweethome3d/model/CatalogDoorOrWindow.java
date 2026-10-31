@@ -55,11 +55,11 @@ public class CatalogDoorOrWindow extends CatalogPieceOfFurniture implements Door
    *             price of the new door or window or <code>null</code> 
    */
   public CatalogDoorOrWindow(String id, String name, String description, Content icon, Content model, 
-                             float width, float depth, float height, float elevation, boolean movable, 
+                             float width, float depth, float height, float elevation, boolean movable,
                              float wallThickness, float wallDistance, Sash [] sashes,
                              float [][] modelRotation, String creator,
                              boolean resizable, BigDecimal price, BigDecimal valueAddedTaxPercentage) {
-    this(id, name, description, icon, null, model, width, depth, height, elevation, movable,   
+    this(id, name, description, icon, null, model, width, depth, height, elevation, movable,
         wallThickness, wallDistance, sashes, modelRotation, creator, resizable, price, valueAddedTaxPercentage);
   }
          
@@ -89,11 +89,11 @@ public class CatalogDoorOrWindow extends CatalogPieceOfFurniture implements Door
    */
   public CatalogDoorOrWindow(String id, String name, String description, 
                              Content icon, Content planIcon, Content model, 
-                             float width, float depth, float height, float elevation, boolean movable, 
+                             float width, float depth, float height, float elevation, boolean movable,
                              float wallThickness, float wallDistance, Sash [] sashes,
                              float [][] modelRotation, String creator,
                              boolean resizable, BigDecimal price, BigDecimal valueAddedTaxPercentage) {
-    this(id, name, description, icon, planIcon, model, width, depth, height, elevation, movable,   
+    this(id, name, description, icon, planIcon, model, width, depth, height, elevation, movable,
         wallThickness, wallDistance, sashes,
         modelRotation, creator, resizable, true, true, price, valueAddedTaxPercentage);
   }
@@ -127,12 +127,12 @@ public class CatalogDoorOrWindow extends CatalogPieceOfFurniture implements Door
    */
   public CatalogDoorOrWindow(String id, String name, String description, 
                              Content icon, Content planIcon, Content model, 
-                             float width, float depth, float height, float elevation, boolean movable, 
+                             float width, float depth, float height, float elevation, boolean movable,
                              float wallThickness, float wallDistance, Sash [] sashes,
                              float [][] modelRotation, String creator,
                              boolean resizable, boolean deformable, boolean texturable,
                              BigDecimal price, BigDecimal valueAddedTaxPercentage) {
-    this(id, name, description, icon, planIcon, model, width, depth, height, elevation, movable,   
+    this(id, name, description, icon, planIcon, model, width, depth, height, elevation, movable,
         wallThickness, wallDistance, sashes,
         modelRotation, creator, resizable, deformable, texturable, price, valueAddedTaxPercentage, null);
   }
@@ -167,12 +167,12 @@ public class CatalogDoorOrWindow extends CatalogPieceOfFurniture implements Door
    */
   public CatalogDoorOrWindow(String id, String name, String description, 
                              Content icon, Content planIcon, Content model, 
-                             float width, float depth, float height, float elevation, boolean movable, 
+                             float width, float depth, float height, float elevation, boolean movable,
                              float wallThickness, float wallDistance, Sash [] sashes,
                              float [][] modelRotation, String creator,
                              boolean resizable, boolean deformable, boolean texturable,
                              BigDecimal price, BigDecimal valueAddedTaxPercentage, String currency) {
-    this(id, name, description, null, null, null, null, icon, planIcon, model, width, depth, height, elevation, movable, 
+    this(id, name, description, null, null, null, null, icon, planIcon, model, width, depth, height, elevation, movable,
         wallThickness, wallDistance, sashes, 
         modelRotation, creator, resizable, deformable, texturable, price, valueAddedTaxPercentage, currency);
   }
@@ -212,13 +212,13 @@ public class CatalogDoorOrWindow extends CatalogPieceOfFurniture implements Door
   public CatalogDoorOrWindow(String id, String name, String description, 
                              String information, String [] tags, Long creationDate, Float grade, 
                              Content icon, Content planIcon, Content model, 
-                             float width, float depth, float height, float elevation, boolean movable, 
+                             float width, float depth, float height, float elevation, boolean movable,
                              float wallThickness, float wallDistance, Sash [] sashes, 
                              float [][] modelRotation, String creator, 
                              boolean resizable, boolean deformable, boolean texturable, 
                              BigDecimal price, BigDecimal valueAddedTaxPercentage, String currency) {
     this(id, name, description, information, tags, creationDate, grade, 
-        icon, planIcon, model, width, depth, height, elevation, movable, 
+        icon, planIcon, model, width, depth, height, elevation, movable,
         null, wallThickness, wallDistance, sashes, 
         modelRotation, creator, resizable, deformable, texturable, price, valueAddedTaxPercentage, currency);
   }
@@ -259,13 +259,13 @@ public class CatalogDoorOrWindow extends CatalogPieceOfFurniture implements Door
   public CatalogDoorOrWindow(String id, String name, String description, 
                              String information, String [] tags, Long creationDate, Float grade, 
                              Content icon, Content planIcon, Content model, 
-                             float width, float depth, float height, float elevation, boolean movable, 
+                             float width, float depth, float height, float elevation, boolean movable,
                              String cutOutShape, float wallThickness, float wallDistance, Sash [] sashes,
                              float [][] modelRotation, String creator, 
                              boolean resizable, boolean deformable, boolean texturable, 
                              BigDecimal price, BigDecimal valueAddedTaxPercentage, String currency) {
     this(id, name, description, information, tags, creationDate, grade, 
-        icon, planIcon, model, width, depth, height, elevation, 1f, movable, 
+        icon, planIcon, model, width, depth, height, elevation, 1f, movable,
         cutOutShape, wallThickness, wallDistance, sashes,
         modelRotation, creator, resizable, deformable, texturable, price, valueAddedTaxPercentage, currency);
   }
@@ -308,13 +308,13 @@ public class CatalogDoorOrWindow extends CatalogPieceOfFurniture implements Door
   public CatalogDoorOrWindow(String id, String name, String description, 
                              String information, String [] tags, Long creationDate, Float grade, 
                              Content icon, Content planIcon, Content model, 
-                             float width, float depth, float height, float elevation, float dropOnTopElevation, boolean movable, 
+                             float width, float depth, float height, float elevation, float dropOnTopElevation, boolean movable,
                              String cutOutShape, float wallThickness, float wallDistance, Sash [] sashes,
                              float [][] modelRotation, String creator, 
                              boolean resizable, boolean deformable, boolean texturable, 
                              BigDecimal price, BigDecimal valueAddedTaxPercentage, String currency) {
     this(id, name, description, information, tags, creationDate, grade, 
-        icon, planIcon, model, width, depth, height, elevation, dropOnTopElevation, movable, 
+        icon, planIcon, model, width, depth, height, elevation, dropOnTopElevation, movable,
         cutOutShape, wallThickness, wallDistance, sashes,
         modelRotation, false, creator, resizable, deformable, texturable, price, valueAddedTaxPercentage, currency);  
   }
@@ -358,13 +358,13 @@ public class CatalogDoorOrWindow extends CatalogPieceOfFurniture implements Door
   public CatalogDoorOrWindow(String id, String name, String description, 
                              String information, String [] tags, Long creationDate, Float grade, 
                              Content icon, Content planIcon, Content model, 
-                             float width, float depth, float height, float elevation, float dropOnTopElevation, boolean movable, 
+                             float width, float depth, float height, float elevation, float dropOnTopElevation, boolean movable,
                              String cutOutShape, float wallThickness, float wallDistance, Sash [] sashes,
                              float [][] modelRotation, boolean backFaceShown, String creator, 
                              boolean resizable, boolean deformable, boolean texturable, 
                              BigDecimal price, BigDecimal valueAddedTaxPercentage, String currency) {
     super(id, name, description, information, tags, creationDate, grade, 
-        icon, planIcon, model, width, depth, height, elevation, dropOnTopElevation, movable, 
+        icon, planIcon, model, width, depth, height, elevation, dropOnTopElevation, movable,
         null, modelRotation, backFaceShown, creator, resizable, deformable, texturable, 
         price, valueAddedTaxPercentage, currency);
     this.cutOutShape = cutOutShape;
@@ -399,7 +399,7 @@ public class CatalogDoorOrWindow extends CatalogPieceOfFurniture implements Door
                              float wallThickness, float wallDistance, Sash [] sashes, 
                              Integer color, float [][] modelRotation, boolean backFaceShown, 
                              float iconYaw, boolean proportional) {
-    super(name, icon, model, width, depth, height, elevation, movable,   
+    super(name, icon, model, width, depth, height, elevation, movable,
         color, modelRotation, backFaceShown, iconYaw, proportional);
     this.wallThickness = wallThickness;
     this.wallDistance = wallDistance;

@@ -203,6 +203,7 @@ import com.eteks.sweethome3d.tools.ResourceURLContent;
  *       width CDATA #IMPLIED
  *       depth CDATA #IMPLIED
  *       height CDATA #IMPLIED
+ *       volume CDATA #IMPLIED
  *       dropOnTopElevation CDATA #IMPLIED>
  * 
  * &lt;!ENTITY % pieceOfFurnitureCommonAttributes
@@ -214,6 +215,7 @@ import com.eteks.sweethome3d.tools.ResourceURLContent;
  *       width CDATA #REQUIRED
  *       depth CDATA #REQUIRED
  *       height CDATA #REQUIRED
+ *       volume CDATA #REQUIRED
  *       dropOnTopElevation CDATA "1"
  *       information CDATA #IMPLIED
  *       model CDATA #IMPLIED
@@ -1061,7 +1063,7 @@ public class HomeXMLHandler extends DefaultHandler {
           parseContent(attributes.get("model")), 
           parseFloat(attributes, "width"), 
           parseFloat(attributes, "depth"), 
-          parseFloat(attributes, "height"), 
+          parseFloat(attributes, "height"),
           elevation, 
           dropOnTopElevation, 
           !"false".equals(attributes.get("movable")), 
@@ -1092,8 +1094,8 @@ public class HomeXMLHandler extends DefaultHandler {
           parseContent(attributes.get("model")), 
           parseFloat(attributes, "width"), 
           parseFloat(attributes, "depth"), 
-          parseFloat(attributes, "height"), 
-          elevation, 
+          parseFloat(attributes, "height"),
+          elevation,
           dropOnTopElevation, 
           !"false".equals(attributes.get("movable")), 
           this.lightSources.toArray(new LightSource [this.lightSources.size()]),
@@ -1121,8 +1123,8 @@ public class HomeXMLHandler extends DefaultHandler {
           parseContent(attributes.get("model")), 
           parseFloat(attributes, "width"), 
           parseFloat(attributes, "depth"), 
-          parseFloat(attributes, "height"), 
-          elevation, 
+          parseFloat(attributes, "height"),
+          elevation,
           dropOnTopElevation, 
           !"false".equals(attributes.get("movable")), 
           attributes.get("staircaseCutOutShape"), 

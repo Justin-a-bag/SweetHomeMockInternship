@@ -80,6 +80,8 @@ public class HomeFurniturePanel extends JPanel implements DialogView {
   private JSpinner                depthSpinner;
   private JLabel                  heightLabel;
   private JSpinner                heightSpinner;
+  private JLabel                  volumeLabel;
+  private JSpinner                volumeSpinner;
   private JCheckBox               keepProportionsCheckBox;
   private NullableCheckBox        mirroredModelCheckBox;
   private JRadioButton            defaultColorAndTextureRadioButton;
@@ -464,7 +466,35 @@ public class HomeFurniturePanel extends JPanel implements DialogView {
           }
         });
     }
-    
+
+    if (controller.isPropertyEditable(HomeFurnitureController.Property.VOLUME)) {
+      // Create volume label and its spinner bound to VOLUME controller property
+      this.volumeLabel = new JLabel(SwingTools.getLocalizedLabelText(preferences, HomeFurniturePanel.class,
+              "volumeLabel.text", unitName));
+      final NullableSpinner.NullableSpinnerLengthModel volumeSpinnerModel = new NullableSpinner.NullableSpinnerLengthModel(
+              preferences, minimumLength, maximumLength);
+      this.volumeSpinner = new NullableSpinner(volumeSpinnerModel);
+      final PropertyChangeListener volumeChangeListener = new PropertyChangeListener() {
+        public void propertyChange(PropertyChangeEvent ev) {
+          Float volume = controller.getVolume();
+          volumeSpinnerModel.setNullable(volume == null);
+          volumeSpinnerModel.setLength(volume);
+          if (volume != null) {
+            volumeSpinnerModel.setMinimumLength(Math.min(volume, minimumLength));
+          }
+        }
+      };
+      volumeChangeListener.propertyChange(null);
+      controller.addPropertyChangeListener(HomeFurnitureController.Property.VOLUME, volumeChangeListener);
+      volumeSpinnerModel.addChangeListener(new ChangeListener() {
+        public void stateChanged(ChangeEvent ev) {
+          controller.removePropertyChangeListener(HomeFurnitureController.Property.VOLUME, volumeChangeListener);
+          controller.setVolume(volumeSpinnerModel.getLength());
+          controller.addPropertyChangeListener(HomeFurnitureController.Property.VOLUME, volumeChangeListener);
+        }
+      });
+    }
+
     if (controller.isPropertyEditable(HomeFurnitureController.Property.PROPORTIONAL)) {
       // Create keep proportions check box bound to PROPORTIONAL controller property
       this.keepProportionsCheckBox = new JCheckBox(SwingTools.getLocalizedLabelText(preferences,
@@ -783,6 +813,8 @@ public class HomeFurniturePanel extends JPanel implements DialogView {
     this.depthSpinner.setEnabled(editableSize);
     this.heightLabel.setEnabled(editableSize);
     this.heightSpinner.setEnabled(editableSize);
+    this.volumeLabel.setEnabled(editableSize);
+    this.volumeSpinner.setEnabled(editableSize);
     this.keepProportionsCheckBox.setEnabled(editableSize && controller.isDeformable());
     this.mirroredModelCheckBox.setEnabled(editableSize);
   }
@@ -849,6 +881,11 @@ public class HomeFurniturePanel extends JPanel implements DialogView {
         this.heightLabel.setDisplayedMnemonic(KeyStroke.getKeyStroke(
             preferences.getLocalizedString(HomeFurniturePanel.class, "heightLabel.mnemonic")).getKeyCode());
         this.heightLabel.setLabelFor(this.heightSpinner);
+      }
+      if (this.volumeLabel != null) {
+        this.volumeLabel.setDisplayedMnemonic(KeyStroke.getKeyStroke(
+                preferences.getLocalizedString(HomeFurniturePanel.class, "volumeLabel.mnemonic")).getKeyCode());
+        this.volumeLabel.setLabelFor(this.volumeSpinner);
       }
       if (this.basePlanItemCheckBox != null) {
         this.basePlanItemCheckBox.setMnemonic(KeyStroke.getKeyStroke(
@@ -1008,14 +1045,22 @@ public class HomeFurniturePanel extends JPanel implements DialogView {
           1, 2, 1, 1, 0, 0, GridBagConstraints.LINE_START, 
           GridBagConstraints.NONE, rightComponentInsets, -10, 0));
     }
+    if (this.volumeLabel != null) {
+      sizePanel.add(this.volumeLabel, new GridBagConstraints(
+              0, 3, 1, 1, 0, 0, labelAlignment,
+              GridBagConstraints.NONE, labelInsets, 0, 0));
+      sizePanel.add(this.volumeSpinner, new GridBagConstraints(
+              1, 3, 1, 1, 0, 0, GridBagConstraints.LINE_START,
+              GridBagConstraints.NONE, rightComponentInsets, -10, 0));
+    }
     if (this.keepProportionsCheckBox != null) {
       sizePanel.add(this.keepProportionsCheckBox, new GridBagConstraints(
-          0, 3, 2, 1, 0, 1, GridBagConstraints.LINE_START, 
+          0, 4, 2, 1, 0, 1, GridBagConstraints.LINE_START,
           GridBagConstraints.NONE, rightComponentInsets, 0, 0));
     }
     if (this.mirroredModelCheckBox != null) {
       sizePanel.add(this.mirroredModelCheckBox, new GridBagConstraints(
-          0, 4, 2, 1, 0, 1, GridBagConstraints.LINE_START, 
+          0, 5, 2, 1, 0, 1, GridBagConstraints.LINE_START,
           GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
     }
     if (sizePanel.getComponentCount() > 0) {
